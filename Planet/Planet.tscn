@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Planet/Planet.gd" type="Script" id=2]
+[ext_resource path="res://Food/Food.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Interface/Interface.tscn" type="PackedScene" id=5]
+
+[node name="Planet" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="EnemyTime" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="StartTime" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="StartPosition" type="Position2D" parent="."]
+position = Vector2( 512, 300 )
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 257.382, 291.129 )
+
+[node name="Interface" parent="." instance=ExtResource( 5 )]
+
+[node name="Food" parent="." instance=ExtResource( 3 )]
+position = Vector2( 245.36, 103.083 )
+
+[node name="Food2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 107.872, 471.499 )
+
+[node name="Food4" parent="." instance=ExtResource( 3 )]
+position = Vector2( 870.065, 494.191 )
+
+[node name="Food5" parent="." instance=ExtResource( 3 )]
+position = Vector2( 795.314, 264.599 )
+
+[node name="Food3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 597.758, 133.785 )
+[connection signal="timeout" from="EnemyTime" to="." method="_on_EnemyTime_timeout"]
+[connection signal="timeout" from="StartTime" to="." method="_on_StartTime_timeout"]
+[connection signal="lost" from="Player" to="." method="gameOver"]
+[connection signal="startGame" from="Interface" to="." method="newGame"]
+[connection signal="eated" from="Food" to="." method="_on_Food_eated"]
+[connection signal="eated" from="Food2" to="." method="_on_Food_eated"]
+[connection signal="eated" from="Food4" to="." method="_on_Food_eated"]
+[connection signal="eated" from="Food5" to="." method="_on_Food_eated"]
+[connection signal="eated" from="Food3" to="." method="_on_Food_eated"]
