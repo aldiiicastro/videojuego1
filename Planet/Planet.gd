@@ -1,16 +1,13 @@
 extends Node2D
-var array_foods
 
 func _ready():
 	randomize()
-	array_foods = [$Food, $Food2,$Food3, $Food4, $Food5]
 
 func newGame():
-	while array_foods != []:
-		$Player.start($StartPosition.position) #Posicion de inicio del jugador
-		$StartTime.start()
-		$Interface.showMessage("Start Game")
-		$Interface.updateScore($Food.getScore())
+	$Player.start($StartPosition.position) #Posicion de inicio del jugador
+	$StartTime.start()
+	$Interface.showMessage("Start Game")
+	$Interface.updateScore(0)
 	
 func gameOver():
 	$EnemyTime.stop()
