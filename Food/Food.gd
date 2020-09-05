@@ -1,13 +1,15 @@
 extends Area2D
-signal eated 
-var score =0
+signal eated
+
+func _ready():
+	hide()
 
 func eated(body):
 	hide()
+	$FoodCollision.set_deferred("disabled", true)
 	emit_signal("eated")
-	$FoodCollision.disabled = true
 
-func getScore():
-	score = score + 1
-	return score
+func play():
+	show()
+	$FoodCollision.set_deferred("disabled", false)
 

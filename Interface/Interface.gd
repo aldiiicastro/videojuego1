@@ -14,6 +14,12 @@ func gameOverI():
 	$MessageLabel.text = "Nombre del juego"
 	$MessageLabel.show()
 
+func winGameI():
+	showMessage("YOU WIN!!")
+	yield($MessageTimer, "timeout")
+	$StartBtn.show()
+	$MessageLabel.text = "Nombre del juego"
+	$MessageLabel.show()
 
 func _on_MessageTimer_timeout():
 	$MessageLabel.hide()
