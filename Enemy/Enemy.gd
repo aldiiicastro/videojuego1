@@ -1,21 +1,44 @@
-extends RigidBody2D
-export(int) var Velocidad_min
-export(int) var Velocidad_max
+extends Area2D
+var target = Vector2()
+var limit
+signal win
+var velocity 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	hide()
+	$Timer.start()
 
+func start(pos, tar):
+	position = pos
+	show()
+	target = tar
+	$CollisionPolygon2D.set_deferred("disabled", false)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func lost():
+	hide()
+	$CollisionPolygon2D.set_deferred("disabled", true)
+	
+
+func _physics_process(delta):
+	velocity = position.direction_to(target.global_position) * 100
+	if position.distance_to(target.global_position)> 5:
+		position += velocity * delta
+
+func _update_position(target):
+	if target.global_position.length() <= 5:
+		position.direction_to(target)
+
 
 
 func _on_VisibilityNotifier2D_screen_exited():
+	queue_free()
+
+func enemyDisapear(body):
+	hide()
+	emit_signal("win")
+	$CollisionPolygon2D.set_deferred("disabled", true)
+
+func _on_Timer_timeout():
+	hide()
+	$CollisionPolygon2D.set_deferred("disabled", true)
 	queue_free()

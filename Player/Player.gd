@@ -1,10 +1,12 @@
-extends KinematicBody2D
+extends Area2D
 
 export (int) var speed = 200
 signal lost 
 var target = Vector2()
 var velocity = Vector2()
 var limit 
+var del
+var pointer_treshol = 50
 
 func _ready():
 	hide()
@@ -13,26 +15,28 @@ func _ready():
 func start(pos):
 	position = pos
 	show()
-	$Colision.disabled = false
-	$Area2D/Colision2.disabled = false
-	
+	$Colision.set_deferred("disabled", false)
+
 func _input(event):
 	if event.is_action_pressed("space"):
 		$Timer.start()
-		velocity = move_and_slide(velocity * 3)
+		velocity = position.direction_to(target) * speed * 3
+		position += velocity * del
 
-func _physics_process(delta):
-	target = get_global_mouse_position()
-	velocity = position.direction_to(target) * speed 
-	look_at(target)
-	if position.distance_to(target) > 5:
-		velocity = move_and_slide(velocity)
 
-func _on_Timer_timeout():
-	velocity = move_and_slide(position.direction_to(target) * speed)
+func _process(delta):
+	target = get_local_mouse_position()
+	if target.length() > pointer_treshol:
+		var direccion = target.normalized()
+		position += direccion * delta * 200
+		$Image.look_at(get_global_mouse_position())
 
-func enemyTouch(body):
+
+func enemyTouch():
 	hide()
 	emit_signal("lost")
-	$Area2D/Colision2.disabled = true
-	$Colision.disabled = true
+	$Colision.set_deferred("disabled", true)
+
+func _on_Timer_timeout():
+	velocity = position.direction_to(target) * speed
+	position += velocity * del

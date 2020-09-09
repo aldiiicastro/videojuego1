@@ -4,9 +4,13 @@
 [ext_resource path="res://Hole/Hole.gd" type="Script" id=2]
 
 [node name="Hole" type="Node2D"]
+rotation = 3.10873
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
 
-[node name="Hole" type="Sprite" parent="."]
-position = Vector2( 308.251, 273.506 )
-scale = Vector2( 0.3, 0.3 )
+[node name="Sprite" type="Sprite" parent="."]
+rotation = 0.00942527
+scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 1 )
