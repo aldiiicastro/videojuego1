@@ -1,11 +1,13 @@
 extends Area2D
 
 export (int) var speed = 200
+var speedNormal = 200
+var speedDashing = speedNormal * 3
 signal lost 
 var target = Vector2()
-var velocity = Vector2()
 var limit 
 var del
+var isDashing = false
 func _ready():
 	hide()
 	limit = get_viewport_rect().size
@@ -16,17 +18,18 @@ func start(pos):
 	$Colision.set_deferred("disabled", false)
 
 func _input(event):
-	if event.is_action_pressed("space"):
-		$Time.start()
-		position += velocity * del * 3
+	pass
 
 func _process(delta):
 	target = get_local_mouse_position()
 	if target.length() > 50:
 		var direccion = target.normalized()
-		del = delta
-		position += direccion * delta * 200
+		position += direccion * delta * speed
 		$Image.look_at(get_global_mouse_position())
+	if Input.is_action_just_pressed("space") && !isDashing:
+		isDashing = true
+		$Time.start()
+		speed = speedDashing
 
 func enemyTouch():
 	hide()
@@ -34,5 +37,5 @@ func enemyTouch():
 	$Colision.set_deferred("disabled", true)
 
 func _on_Time_timeout():
-	velocity = position.direction_to(target) * speed
-	position += velocity * del
+	isDashing = false
+	speed = speedNormal

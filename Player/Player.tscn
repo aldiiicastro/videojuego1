@@ -24,4 +24,5 @@ position = Vector2( 0.0650635, 0.432861 )
 shape = SubResource( 1 )
 
 [node name="Time" type="Timer" parent="."]
+wait_time = 0.4
 [connection signal="timeout" from="Time" to="." method="_on_Time_timeout"]

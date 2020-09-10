@@ -4,7 +4,7 @@ var score = 0
 var foodArray = []
 var holeArray = []
 var enemyArray = []
-var numsHoles = 3
+var numsHoles = 3 ##Cantidad de agujeros que se ponen
 
 export (PackedScene) var Hole
 export (PackedScene) var Enemy
@@ -62,9 +62,12 @@ func _on_StartTime_timeout():
 func setHoles():
 	for i in range(numsHoles):
 		var hole = Hole.instance()
-		add_child(hole)
-		holeArray.append(hole)
-		hole.start()
+		initialize(hole, holeArray)
+
+func initialize(obj,array):
+	add_child(obj)
+	array.append(obj)
+	obj.start()
 
 ##Cuando un rombo es comido, se cambia el score
 func _on_Food_eated():
@@ -104,10 +107,7 @@ func _on_EnemyDead_timeout():
 func _on_FoodTime_timeout():
 	var food = Food.instance()
 	food.connect("eated", self, "_on_Food_eated")
-	add_child(food)
-	food.start()
-	foodArray.append(food)
-	print(score)
+	initialize(food, foodArray)
 
 
 

@@ -8,5 +8,5 @@ func lost():
 	queue_free()
 
 func start():
-	set_position(Vector2(rand_range(0, 900), rand_range(0, 600)))
+	set_position(Vector2(rand_range(0, 800), rand_range(0, 500)))
 	show()
