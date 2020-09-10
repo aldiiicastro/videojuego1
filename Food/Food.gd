@@ -15,3 +15,7 @@ func start():
 	show()
 	$FoodCollision.set_deferred("disabled", false)
 
+func lost():
+	hide()
+	$FoodCollision.set_deferred("disabled", true)
+	queue_free()

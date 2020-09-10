@@ -10,24 +10,11 @@
 [node name="Planet" type="Node2D"]
 position = Vector2( 3.05176e-05, 1.49831 )
 script = ExtResource( 2 )
+Hole = ExtResource( 6 )
 Enemy = ExtResource( 4 )
 Food = ExtResource( 3 )
 
 [node name="Interface" parent="." instance=ExtResource( 5 )]
-
-[node name="Hole" parent="." instance=ExtResource( 6 )]
-position = Vector2( 300, 100 )
-rotation = 0.0
-scale = Vector2( 0.5, 0.5 )
-
-[node name="Hole2" parent="." instance=ExtResource( 6 )]
-position = Vector2( 800, 500 )
-scale = Vector2( 0.5, 0.5 )
-
-[node name="Hole3" parent="." instance=ExtResource( 6 )]
-position = Vector2( 750, 150 )
-rotation = 3.0727
-scale = Vector2( 0.5, 0.5 )
 
 [node name="StartPosition" type="Position2D" parent="."]
 position = Vector2( 512, 300 )
@@ -37,24 +24,6 @@ position = Vector2( 257.382, 291.129 )
 collision_layer = 3
 collision_mask = 3
 
-[node name="Food1" parent="." instance=ExtResource( 3 )]
-position = Vector2( 245.36, 103.083 )
-
-[node name="Food2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 245.36, 103.083 )
-collision_layer = 2147483650
-
-[node name="Food3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 245.36, 103.083 )
-collision_layer = 2147483650
-
-[node name="Food4" parent="." instance=ExtResource( 3 )]
-position = Vector2( 245.36, 103.083 )
-
-[node name="Food5" parent="." instance=ExtResource( 3 )]
-position = Vector2( 245.36, 103.083 )
-collision_mask = 2147483650
-
 [node name="EnemyTime" type="Timer" parent="."]
 wait_time = 0.5
 
@@ -63,13 +32,12 @@ wait_time = 2.0
 one_shot = true
 
 [node name="FoodTime" type="Timer" parent="."]
+
+[node name="EnemyDead" type="Timer" parent="."]
+wait_time = 3.0
 [connection signal="startGame" from="Interface" to="." method="newGame"]
 [connection signal="lost" from="Player" to="." method="gameOver"]
-[connection signal="eated" from="Food1" to="." method="_on_Food_eated"]
-[connection signal="eated" from="Food2" to="." method="_on_Food_eated"]
-[connection signal="eated" from="Food3" to="." method="_on_Food_eated"]
-[connection signal="eated" from="Food4" to="." method="_on_Food_eated"]
-[connection signal="eated" from="Food5" to="." method="_on_Food_eated"]
 [connection signal="timeout" from="EnemyTime" to="." method="_on_EnemyTime_timeout"]
 [connection signal="timeout" from="StartTime" to="." method="_on_StartTime_timeout"]
 [connection signal="timeout" from="FoodTime" to="." method="_on_FoodTime_timeout"]
+[connection signal="timeout" from="EnemyDead" to="." method="_on_EnemyDead_timeout"]

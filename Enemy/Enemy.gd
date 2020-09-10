@@ -6,7 +6,6 @@ var velocity
 
 func _ready():
 	hide()
-	$Timer.start()
 
 func start(pos, tar):
 	position = pos
@@ -16,8 +15,8 @@ func start(pos, tar):
 
 func lost():
 	hide()
+	queue_free()
 	$CollisionPolygon2D.set_deferred("disabled", true)
-	
 
 func _physics_process(delta):
 	velocity = position.direction_to(target.global_position) * 100
@@ -28,17 +27,12 @@ func _update_position(target):
 	if target.global_position.length() <= 5:
 		position.direction_to(target)
 
-
-
 func _on_VisibilityNotifier2D_screen_exited():
 	queue_free()
 
 func enemyDisapear(body):
 	hide()
 	emit_signal("win")
+	queue_free()
 	$CollisionPolygon2D.set_deferred("disabled", true)
 
-func _on_Timer_timeout():
-	hide()
-	$CollisionPolygon2D.set_deferred("disabled", true)
-	queue_free()
