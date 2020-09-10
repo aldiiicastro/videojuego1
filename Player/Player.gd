@@ -6,8 +6,6 @@ var target = Vector2()
 var velocity = Vector2()
 var limit 
 var del
-var direccion
-var pointer_treshol = 50
 func _ready():
 	hide()
 	limit = get_viewport_rect().size
@@ -24,7 +22,7 @@ func _input(event):
 
 func _process(delta):
 	target = get_local_mouse_position()
-	if target.length() > pointer_treshol:
+	if target.length() > 50:
 		var direccion = target.normalized()
 		del = delta
 		position += direccion * delta * 200

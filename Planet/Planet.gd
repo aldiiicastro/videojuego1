@@ -74,15 +74,14 @@ func _on_Food_eated():
 		score = score + 1
 		$Interface.updateScore(score)
 
-
 ##Cuando el tiempo de spawn termina se instancia otro, ademas se fija si ya llego a su maximo espera y sino sigue spawneando,
 ## se pone la posicion aleatoria de los agujeros.
 func _on_EnemyTime_timeout():
 	var enemy = Enemy.instance()
 	enemy.connect("win", $Player, "enemyTouch")
-	if enemyArray.size() == 12:
+	if enemyArray.size() == 7:
 		$EnemyTime.stop()
-	elif enemyArray.size() < 12:
+	elif enemyArray.size() < 7:
 		$EnemyDead.start()
 		add_child(enemy)
 		enemyPosition(enemy)

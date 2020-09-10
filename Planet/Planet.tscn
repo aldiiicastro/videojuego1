@@ -34,7 +34,6 @@ one_shot = true
 [node name="FoodTime" type="Timer" parent="."]
 
 [node name="EnemyDead" type="Timer" parent="."]
-wait_time = 3.0
 [connection signal="startGame" from="Interface" to="." method="newGame"]
 [connection signal="lost" from="Player" to="." method="gameOver"]
 [connection signal="timeout" from="EnemyTime" to="." method="_on_EnemyTime_timeout"]

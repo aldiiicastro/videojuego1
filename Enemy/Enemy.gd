@@ -23,10 +23,6 @@ func _physics_process(delta):
 	if position.distance_to(target.global_position)> 5:
 		position += velocity * delta
 
-func _update_position(target):
-	if target.global_position.length() <= 5:
-		position.direction_to(target)
-
 func _on_VisibilityNotifier2D_screen_exited():
 	queue_free()
 
@@ -35,4 +31,3 @@ func enemyDisapear(body):
 	emit_signal("win")
 	queue_free()
 	$CollisionPolygon2D.set_deferred("disabled", true)
-
