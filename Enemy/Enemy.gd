@@ -2,7 +2,9 @@ extends Area2D
 var target = Vector2()
 var limit
 signal win
-var velocity 
+var velocity = Vector2.ZERO
+export(float) var friction = 0.9
+export(float) var speed = 15
 
 func _ready():
 	hide()
@@ -19,9 +21,12 @@ func lost():
 	$CollisionPolygon2D.set_deferred("disabled", true)
 
 func _physics_process(delta):
-	velocity = position.direction_to(target.global_position) * 100
-	if position.distance_to(target.global_position)> 5:
-		position += velocity * delta
+	velocity += position.direction_to(target.global_position).normalized() * speed
+	velocity *=friction
+	if velocity.length() < 1:
+		velocity = Vector2.ZERO
+	position += velocity * delta
+	
 
 func _on_VisibilityNotifier2D_screen_exited():
 	queue_free()

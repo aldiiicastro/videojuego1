@@ -21,15 +21,20 @@ func _input(event):
 	pass
 
 func _process(delta):
-	target = get_local_mouse_position()
+	if speed == 200:
+		target = get_local_mouse_position()
 	if target.length() > 50:
 		var direccion = target.normalized()
 		position += direccion * delta * speed
 		$Image.look_at(get_global_mouse_position())
-	if Input.is_action_just_pressed("space") && !isDashing:
-		isDashing = true
-		$Time.start()
-		speed = speedDashing
+		if Input.is_action_just_pressed("space") && !isDashing:
+			dashing(delta, direccion)
+
+func dashing(delta, direcccion):
+	isDashing = true
+	$Time.start()
+	speed = speedDashing
+	position += direcccion * delta * speed
 
 func enemyTouch():
 	hide()
